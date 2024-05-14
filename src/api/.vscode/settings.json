@@ -1,0 +1,11 @@
+{
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit"
+        },
+    },
+    "black-formatter.args": ["--config", "pyproject.toml"],
+    "ruff.lint.args": ["--config=pyproject.toml"],
+}
