@@ -42,6 +42,9 @@ export default defineComponent({
       isAddingLocation: false,
     }
   },
+  created() {
+    this.fetchData();
+  },
   watch: {
     showAddLocationModal(newVal) {
       if (!newVal) {
@@ -50,6 +53,34 @@ export default defineComponent({
     },
   },
   methods: {
+    async fetchData() {
+      try {
+        const response = await fetch('http://localhost:8000/all_locations');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        this.allLocations = await response.json();
+      } catch (error) {
+          console.error('There was a problem with the fetch operation: ', error);
+      }
+
+      try {
+          const response = await fetch('http://localhost:8000/dashboard_locations');
+          if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const locations = await response.json();
+          if (this.locations.length === 0) {
+            this.isLoading = false;
+          }
+          this.locations = locations.map((location: LocationDTO) => ({
+              ...location,
+              class: 'bg-custom-gray-dashboard text-white'
+          }));
+      } catch (error) {
+          console.error('There was a problem with the fetch operation: ', error);
+      }
+    },
     filterLocations() {
       this.filteredLocations = this.allLocations.filter((location: LocationDTO) => {
           const locationName = location.name;
@@ -126,33 +157,5 @@ export default defineComponent({
       const forecast = await response.json();
       this.selectedLocationDetails = { ...location, ...forecast };
     },
-  }, 
-  async created() {
-    try {
-      const response = await fetch('http://localhost:8000/all_locations');
-      if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      this.allLocations = await response.json();
-    } catch (error) {
-        console.error('There was a problem with the fetch operation: ', error);
-    }
-
-    try {
-        const response = await fetch('http://localhost:8000/dashboard_locations');
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const locations = await response.json();
-        if (this.locations.length === 0) {
-          this.isLoading = false;
-        }
-        this.locations = locations.map((location: LocationDTO) => ({
-            ...location,
-            class: 'bg-custom-gray-dashboard text-white'
-        }));
-    } catch (error) {
-        console.error('There was a problem with the fetch operation: ', error);
-    }
   }
 });
