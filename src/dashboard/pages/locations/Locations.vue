@@ -20,12 +20,12 @@
       </div>
       <div class="m-12 mt-0">
         <UTable
-          loading
+          :loading="isLoading"
           :loading-state="{ icon: 'i-heroicons-arrow-path-20-solid', label: '' }"
           :progress="null"
           :columns="columns" :rows="locations" @select="selectLocationDetails">
           <template #empty-state>
-            <div class="flex flex-col items-center justify-center py-6 gap-3">
+            <div v-if="locations.length === 0" class="flex flex-col items-center justify-center py-6 gap-3">
               <span class="italic text-sm">No Location here!</span>
             </div>
           </template>

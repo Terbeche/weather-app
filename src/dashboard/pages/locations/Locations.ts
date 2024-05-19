@@ -37,7 +37,8 @@ export default defineComponent({
       selectedLocationDetails: null as DashboardLocationDTO | null,
       selectedLocationId: null,
       showSidebar: false,
-      searchQuery: ''
+      searchQuery: '',
+      isLoading: true
     }
   },
   watch: {
@@ -138,9 +139,12 @@ export default defineComponent({
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const locations = await response.json();
+        if (this.locations.length === 0) {
+          this.isLoading = false;
+        }
         this.locations = locations.map((location: LocationDTO) => ({
             ...location,
-            class: 'bg-custom-dashboard text-white'
+            class: 'bg-custom-gray-dashboard text-white'
         }));
     } catch (error) {
         console.error('There was a problem with the fetch operation: ', error);
