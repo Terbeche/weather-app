@@ -24,6 +24,7 @@ class Location(Base):
     name = Column(String, index=True)
     latitude = Column(Float)
     longitude = Column(Float)
+    country = Column(String)
 
 def add_locations_to_db():
     db = SessionLocal()
@@ -33,9 +34,8 @@ def add_locations_to_db():
             location = Location(
                 name=row['Capital City'],
                 latitude=float(row['Latitude']),
-                longitude=float(row['Longitude'])
+                longitude=float(row['Longitude']),
+                country=row['Country']
             )
             db.add(location)
         db.commit()
-
-add_locations_to_db()
