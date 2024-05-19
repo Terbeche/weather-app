@@ -1,0 +1,91 @@
+<template>
+    <div>
+      <div class="m-12 my-0 pt-4 flex flex-col">
+        <div class="flex flex-row mb-12 mt-0 gap-2 items-center">
+          <img class="w-12" src="@/assets/icons/5.svg" alt="Vue logo" />
+          <h1 class="text-xl font-bold">Weather App</h1>
+        </div>
+        <div class="flex justify-between mb-4">
+          <span class="text-3xl font-bold">Locations</span>
+          <UButton
+            @click="openAddLocationForm"
+            icon="i-heroicons-plus"
+            size="sm"
+            variant="solid"
+            label="Add Location"
+            :trailing="false"
+            class="bg-custom-cyan text-black hover:bg-custom-cyan mb-4"
+          />
+        </div>
+      </div>
+      <div class="m-12 mt-0">
+        <UTable
+          loading
+          :loading-state="{ icon: 'i-heroicons-arrow-path-20-solid', label: '' }"
+          :progress="null"
+          :columns="columns" :rows="locations" @select="selectLocationDetails">
+          <template #empty-state>
+            <div class="flex flex-col items-center justify-center py-6 gap-3">
+              <span class="italic text-sm">No Location here!</span>
+            </div>
+          </template>
+          <template #name-data="{ row }">
+            <div class="flex flex-row gap-4">
+              <img class="justify-self-center" :src="icons[getWeatherIcon(row.weather_code)]" alt="Weather Icon" />
+              <span class="justify-self-center self-center">{{ row.name }}</span>
+            </div>
+          </template>
+          <template #actions-data="{ row }">
+            <UButton color="custom-gray" class="hover:text-red-600" variant="ghost" icon="i-heroicons-trash" @click.stop="selectLocation(row)" />
+          </template>
+        </UTable>
+        <UModal
+          v-model="showDeleteModal"
+          :ui="{
+            overlay: {
+              background: 'bg-custom-gray-overlay/75 dark:bg-gray-800/75'
+            },
+          }"
+        >
+          <div class="p-6 bg-black">
+            <h2 class="text-xl text-white">Confirm Deletion</h2>
+            <p class="text-white">Are you sure you want to delete this location?</p>
+            <div class="mt-6 flex flex-col space-y-2">
+              <UButton block color="gray" variant="solid" @click="showDeleteModal = false">Cancel</UButton>
+              <UButton block color="red" variant="solid" @click="removeLocation(selectedLocationToRemove)">Delete</UButton>
+            </div>
+          </div>
+        </UModal>
+        <UModal
+          v-model="showAddLocationModal"
+          :ui="{
+            overlay: {
+              background: 'bg-custom-gray-overlay/75 dark:bg-gray-800/75'
+            },
+          }"
+        >
+          <div class="p-6 bg-white">
+            <h2 class="text-xl text-black mb-2">Add Location</h2>
+            <UInput
+              v-model="searchQuery"
+              @input="filterLocations"
+              icon="i-heroicons-magnifying-glass-20-solid"
+              size="sm"
+              color="white"
+              :trailing="false"
+              placeholder="Search for the desired location..."
+              class="mb-4"
+            />
+            <div v-if="filteredLocations.length" class="mb-2">
+              <div v-for="location in filteredLocations" :key="location.id" @click="selectLocationToAdd(location)" class="cursor-pointer hover:bg-gray-200">
+                {{ location.name }}
+              </div>
+            </div>
+            <UButton block color="blue" variant="solid" @click="addLocation">Add Location</UButton>
+          </div>
+        </UModal>
+      </div>
+    </div>
+  </template>
+  
+  <script src="./Locations.ts"></script>

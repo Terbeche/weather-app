@@ -102,6 +102,24 @@ def get_locations(db: Session = Depends(get_db)):
         locations.append(location_data)
     return locations
 
+@app.get("/dashboard_locations/{id}")
+def get_location(id: int, db: Session = Depends(get_db)):
+    dashboard_location = db.query(DashboardLocation).get(id)
+    if dashboard_location is None:
+        raise HTTPException(status_code=404, detail="Location not found")
+    location = db.query(Location).get(dashboard_location.location_id)
+    weather_data = get_weather_data(location.latitude, location.longitude)
+    location_data = {
+        "id": dashboard_location.id,
+        "location_id": location.id,
+        "name": location.name,
+        "latitude": location.latitude,
+        "longitude": location.longitude,
+        "temperature": weather_data['current']['temperature'],
+        "rainfall": weather_data['current']['rain'],
+        "weather_code": weather_data['current']['weathercode']
+    }
+    return location_data
 
 @app.get("/forecast/{location_id}")
 def get_forecast(location_id: int, db: Session = Depends(get_db)):
