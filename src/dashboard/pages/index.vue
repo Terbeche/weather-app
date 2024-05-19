@@ -1,6 +1,7 @@
 <template>
     <div class="bg-black text-white min-h-screen px-12">
       <Locations />
+      <UNotifications />
     </div>
   </template>  
   

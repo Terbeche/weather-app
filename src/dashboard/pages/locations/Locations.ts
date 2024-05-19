@@ -37,7 +37,7 @@ export default defineComponent({
       selectedLocationDetails: null as DashboardLocationDTO | null,
       selectedLocationId: null,
       showSidebar: false,
-      searchQuery: '',
+      searchQuery: ''
     }
   },
   watch: {
@@ -58,10 +58,13 @@ export default defineComponent({
       this.showAddLocationModal = true;
     },
     async addLocation() {
+        const toast = useToast();
+
         if (!this.selectedLocationToAdd) return;
         const locationExists = this.locations.some((location: DashboardLocationDTO) => location.location_id === this.selectedLocationToAdd?.id);
         if (locationExists) {
-            return;
+          toast.add({ title: 'This location already exists!', color: 'red', timeout: 1500});
+          return;
         }    
         try {
             const response = await fetch(`http://localhost:8000/dashboard_locations`, {
@@ -137,10 +140,10 @@ export default defineComponent({
         const locations = await response.json();
         this.locations = locations.map((location: LocationDTO) => ({
             ...location,
-            class: 'bg-custom-table text-white'
+            class: 'bg-custom-dashboard text-white'
         }));
     } catch (error) {
         console.error('There was a problem with the fetch operation: ', error);
     }
-  }      
+  }
 });

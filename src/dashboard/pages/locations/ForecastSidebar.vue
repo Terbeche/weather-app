@@ -5,12 +5,12 @@
       prevent-close
       :ui="{
         overlay: {
-            background: 'bg-custom-gray-overlay/75 dark:bg-gray-800/75'
+            background: 'bg-custom-gray-dashboard/75 dark:bg-gray-800/75'
         },
       }"
       >
-      <div class="flex flex-col flex-1 bg-custom-table px-8">
-          <div class="flex items-center justify-between bg-custom-table mt-6">
+      <div class="flex flex-col flex-1 bg-custom-dashboard px-8">
+          <div class="flex items-center justify-between bg-custom-dashboard mt-6">
             <h2 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
               <h3 v-if="location" class="text-xl text-white">{{ location.name }}</h3>
             </h2>

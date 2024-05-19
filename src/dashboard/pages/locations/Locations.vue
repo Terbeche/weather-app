@@ -14,7 +14,7 @@
             variant="solid"
             label="Add Location"
             :trailing="false"
-            class="bg-custom-cyan text-black hover:bg-custom-cyan mb-4"
+            class="bg-custom-cyan text-black hover:bg-custom-cyan mb-4 hover:bg-blue-500"
           />
         </div>
       </div>
@@ -43,7 +43,7 @@
           v-model="showDeleteModal"
           :ui="{
             overlay: {
-              background: 'bg-custom-gray-overlay/75 dark:bg-gray-800/75'
+              background: 'bg-custom-gray-dashboard/75 dark:bg-gray-800/75'
             },
           }"
         >
@@ -60,28 +60,34 @@
           v-model="showAddLocationModal"
           :ui="{
             overlay: {
-              background: 'bg-custom-gray-overlay/75 dark:bg-gray-800/75'
+              background: 'bg-custom-gray-dashboard/75 dark:bg-gray-800/75'
             },
           }"
         >
-          <div class="p-6 bg-white">
-            <h2 class="text-xl text-black mb-2">Add Location</h2>
+          <div class="p-6 bg-custom-gray-dashboard">
+            <h2 class="text-xl text-white mb-2">Add Location</h2>
             <UInput
               v-model="searchQuery"
               @input="filterLocations"
               icon="i-heroicons-magnifying-glass-20-solid"
               size="sm"
-              color="white"
               :trailing="false"
               placeholder="Search for the desired location..."
-              class="mb-4"
+              class="mb-4 text-white"
+              :ui= "{ 
+                color: {
+                    white: {
+                        outline: 'shadow-sm bg-custom-gray dark:bg-gray-900 text-white-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400',
+                    }
+                }
+              }"
             />
-            <div v-if="filteredLocations.length" class="mb-2">
-              <div v-for="location in filteredLocations" :key="location.id" @click="selectLocationToAdd(location)" class="cursor-pointer hover:bg-gray-200">
+            <div v-if="filteredLocations.length" class="mb-2 text-white">
+              <div v-for="location in filteredLocations" :key="location.id" @click="selectLocationToAdd(location)" class="cursor-pointer hover:bg-gray-600">
                 {{ location.name }}
               </div>
             </div>
-            <UButton block color="blue" variant="solid" @click="addLocation">Add Location</UButton>
+            <UButton block class="bg-custom-cyan text-black hover:bg-blue-500" variant="solid" @click="addLocation">Add Location</UButton>
           </div>
         </UModal>
       </div>
