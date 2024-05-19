@@ -4,12 +4,14 @@ import locations, dashboard_locations
 from location import add_locations_to_db 
 from database import engine, SessionLocal
 from models import Base
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI()
 
-origins = [
-    "http://localhost:3000",
-]
+origins = os.getenv('ALLOWED_ORIGINS').split(',')
 
 app.add_middleware(
     CORSMiddleware,

@@ -1,14 +1,12 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from dotenv import load_dotenv
+
+load_dotenv()
 
 engine = create_engine(
-    "postgresql://",
-    connect_args={
-        "user": "postgres",
-        "password": "0000",
-        "host": "localhost",
-        "port": 5432,
-        "database": "weather"
-    }
+    f"postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
 )
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
