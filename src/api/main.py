@@ -82,8 +82,8 @@ def get_db():
     finally:
         db.close()
 
-@app.get("/")
-def good_luck():
-    return {
-        "Good": "Luck!",
-    }
+
+@app.get("/all_locations")
+def get_all_locations(db: Session = Depends(get_db)):
+    locations = db.query(Location).all()
+    return locations
