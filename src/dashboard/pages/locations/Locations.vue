@@ -85,6 +85,9 @@
           </div>
         </UModal>
       </div>
+      <div class="bg-black">
+        <ForecastSidebar :show="showSidebar" :location="selectedLocationDetails" @close="showSidebar = false" />
+      </div>
     </div>
   </template>
   
