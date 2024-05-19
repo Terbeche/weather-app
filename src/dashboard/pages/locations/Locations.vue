@@ -41,15 +41,18 @@
         </UTable>
         <UModal
           v-model="showDeleteModal"
+          prevent-close
           :ui="{
             overlay: {
               background: 'bg-custom-gray-dashboard/75 dark:bg-gray-800/75'
-            },
+            }, background: 'bg-custom-gray dark:bg-gray-900'
           }"
         >
-          <div class="p-6 bg-black">
-            <h2 class="text-xl text-white">Confirm Deletion</h2>
-            <p class="text-white">Are you sure you want to delete this location?</p>
+          <div class="p-6 bg-custom-gray rounded-lg">
+            <div class="flex flex-row justify-between">
+              <p class="text-white">Are you sure you want to remove this location?</p>
+             <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1 text-white" @click="showDeleteModal = false" />
+            </div>
             <div class="mt-6 flex flex-col space-y-2">
               <UButton block color="gray" variant="solid" @click="showDeleteModal = false">Cancel</UButton>
               <UButton block color="red" variant="solid" @click="removeLocation(selectedLocationToRemove)">Delete</UButton>
@@ -58,15 +61,19 @@
         </UModal>
         <UModal
           v-model="showAddLocationModal"
+          prevent-close
           :ui="{
             overlay: {
               background: 'bg-custom-gray-dashboard/75 dark:bg-gray-800/75'
-            },
+            },  background: 'bg-custom-gray dark:bg-gray-900'
           }"
         >
-          <div class="p-6 bg-custom-gray-dashboard">
-            <h2 class="text-xl text-white mb-2">Add Location</h2>
-            <UInput
+          <div class="p-6">
+            <div class="flex flex-row justify-between mb-4">
+              <h2 class="text-xl text-white mb-2">Add Location</h2>
+              <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1 text-white" @click="showAddLocationModal = false" />
+            </div>
+              <UInput
               v-model="searchQuery"
               @input="filterLocations"
               icon="i-heroicons-magnifying-glass-20-solid"
@@ -77,7 +84,7 @@
               :ui= "{ 
                 color: {
                     white: {
-                        outline: 'shadow-sm bg-custom-gray dark:bg-gray-900 text-white-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400',
+                        outline: 'shadow-sm bg-custom-gray-input dark:bg-gray-900 text-white-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400',
                     }
                 }
               }"

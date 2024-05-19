@@ -8,6 +8,7 @@ export default <Partial<Config>>{
             'custom-gray': '#323232',
             'custom-gray-dashboard': '#1b1b1d',
             'custom-gray-text': '#bebebe',
+            'custom-gray-input': '#555555',
           }
         }
       },
