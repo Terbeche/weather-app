@@ -10,7 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@nuxt/ui": "^2.14.1",
+    "@nuxt/ui": "^2.16.0",
     "lodash": "^4.17.21",
     "nuxt": "^3.10.3",
     "valibot": "^0.29.0",
