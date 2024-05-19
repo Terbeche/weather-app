@@ -27,7 +27,7 @@ export default {
           case code >= 51 && code <= 57:
           case code >= 61 && code <= 67:
             return '3';
-          case code >= 71 && code <= 75:
+          case code >= 71 && code <= 77:
           case code >= 85 && code <= 86:
             return '4';
           case code >= 95 && code <= 99:
