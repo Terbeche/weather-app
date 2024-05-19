@@ -109,6 +109,16 @@ def create_location(location: LocationId, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_location)
     return db_location
+
+@app.delete("/dashboard_locations/{id}")
+def delete_location(id: int, db: Session = Depends(get_db)):
+    dashboard_location = db.query(DashboardLocation).get(id)
+    if dashboard_location is None:
+        raise HTTPException(status_code=404, detail="Location not found")
+    db.delete(dashboard_location)
+    db.commit()
+    return {"message": "Location deleted successfully"}
+
 def get_weather_data(latitude: float, longitude: float):
     response = httpx.get(f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current=temperature,rain,weathercode")
     return response.json()
