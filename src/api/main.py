@@ -82,6 +82,29 @@ def get_db():
     finally:
         db.close()
 
+@app.get("/dashboard_locations")
+def get_locations(db: Session = Depends(get_db)):
+    dashboard_locations = db.query(DashboardLocation).all()
+    locations = []
+    for dashboard_location in dashboard_locations:
+        location = db.query(Location).get(dashboard_location.location_id)
+        weather_data = get_weather_data(location.latitude, location.longitude)
+        location_data = {
+            "id": dashboard_location.id,
+            "location_id": location.id,
+            "name": location.name,
+            "latitude": location.latitude,
+            "longitude": location.longitude,
+            "temperature": weather_data['current']['temperature'],
+            "rainfall": weather_data['current']['rain'],
+            "weather_code": weather_data['current']['weathercode']
+        }
+        locations.append(location_data)
+    return locations
+
+def get_weather_data(latitude: float, longitude: float):
+    response = httpx.get(f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current=temperature,rain,weathercode")
+    return response.json()
 
 @app.get("/all_locations")
 def get_all_locations(db: Session = Depends(get_db)):
