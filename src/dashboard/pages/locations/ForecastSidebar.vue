@@ -12,7 +12,7 @@
       <div class="flex flex-col flex-1 bg-custom-gray-dashboard px-8">
           <div class="flex items-center justify-between bg-custom-gray-dashboard mt-6">
             <h2 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
-              <h3 v-if="location" class="text-xl text-white">{{ location.name }}</h3>
+              <h3 v-if="location" class="text-xl text-white">{{ location.name }}, {{ location.country }}</h3>
             </h2>
             <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="text-custom-gray-text" @click="showSidebar = false" />
           </div>

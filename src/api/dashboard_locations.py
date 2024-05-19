@@ -25,11 +25,12 @@ def get_locations(db: Session = Depends(get_db)):
             "id": dashboard_location.id,
             "location_id": location.id,
             "name": location.name,
+            "country": location.country,
             "latitude": location.latitude,
             "longitude": location.longitude,
             "temperature": weather_data['current']['temperature'],
             "rainfall": weather_data['current']['rain'],
-            "weather_code": weather_data['current']['weathercode']
+            "weather_code": weather_data['current']['weathercode'],
         }
         locations.append(location_data)
     return locations
@@ -45,6 +46,7 @@ def get_location(id: int, db: Session = Depends(get_db)):
         "id": dashboard_location.id,
         "location_id": location.id,
         "name": location.name,
+        "country": location.country,
         "latitude": location.latitude,
         "longitude": location.longitude,
         "temperature": weather_data['current']['temperature'],
