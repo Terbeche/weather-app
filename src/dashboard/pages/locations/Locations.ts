@@ -38,7 +38,8 @@ export default defineComponent({
       selectedLocationId: null,
       showSidebar: false,
       searchQuery: '',
-      isLoading: true
+      isLoading: true,
+      isAddingLocation: false,
     }
   },
   watch: {
@@ -62,9 +63,11 @@ export default defineComponent({
         const toast = useToast();
 
         if (!this.selectedLocationToAdd) return;
+        this.isAddingLocation = true; 
         const locationExists = this.locations.some((location: DashboardLocationDTO) => location.location_id === this.selectedLocationToAdd?.id);
         if (locationExists) {
           toast.add({ title: 'This location already exists!', color: 'red', timeout: 1500});
+          this.isAddingLocation = false;
           return;
         }    
         try {
@@ -88,7 +91,9 @@ export default defineComponent({
             this.selectedLocationToAdd = null;
           } catch (error) {
             console.error('There was a problem with the fetch operation: ', error);
-        }
+        } finally {
+            this.isAddingLocation = false;
+          }
     },
     async removeLocation(locationToRemove: DashboardLocationDTO) {
       try {

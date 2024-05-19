@@ -87,7 +87,7 @@
                 {{ location.name }}
               </div>
             </div>
-            <UButton block class="bg-custom-cyan text-black hover:bg-blue-500" variant="solid" @click="addLocation">Add Location</UButton>
+            <UButton block :loading="isAddingLocation" class="bg-custom-cyan text-black hover:bg-blue-500" variant="solid" @click="addLocation">Add Location</UButton>
           </div>
         </UModal>
       </div>
