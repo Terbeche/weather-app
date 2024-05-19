@@ -102,6 +102,21 @@ def get_locations(db: Session = Depends(get_db)):
         locations.append(location_data)
     return locations
 
+
+@app.get("/forecast/{location_id}")
+def get_forecast(location_id: int, db: Session = Depends(get_db)):
+    location = db.query(Location).get(location_id)
+    if location is None:
+        raise HTTPException(status_code=404, detail="Location not found")
+    weather_data = get_forecast_data(location.latitude, location.longitude)
+    location.time = weather_data['daily']['time']
+    location.temperature_min = weather_data['daily']['temperature_2m_min']
+    location.temperature_max = weather_data['daily']['temperature_2m_max']
+    location.rain_sum = weather_data['daily']['rain_sum']
+    location.weather_code = weather_data['daily']['weather_code']
+
+    return location
+
 @app.post("/dashboard_locations", response_model=DashboardLocationModel)
 def create_location(location: LocationId, db: Session = Depends(get_db)):
     db_location = DashboardLocation(location_id=location.id)
@@ -121,6 +136,10 @@ def delete_location(id: int, db: Session = Depends(get_db)):
 
 def get_weather_data(latitude: float, longitude: float):
     response = httpx.get(f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current=temperature,rain,weathercode")
+    return response.json()
+
+def get_forecast_data(latitude: float, longitude: float):
+    response = httpx.get(f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&daily=temperature_2m_min,temperature_2m_max,rain_sum,weather_code")
     return response.json()
 
 @app.get("/all_locations")
