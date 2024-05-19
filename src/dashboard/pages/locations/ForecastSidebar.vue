@@ -9,7 +9,7 @@
         },
       }"
       >
-      <div class="flex flex-col flex-1 bg-custom-gray-dashboard px-8">
+      <div class="flex flex-col flex-1 bg-custom-gray-dashboard px-8 overflow-y-auto max-h-screen">
           <div class="flex items-center justify-between bg-custom-gray-dashboard mt-6">
             <h2 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
               <h3 v-if="location" class="text-xl text-white">{{ location.name }}, {{ location.country }}</h3>
@@ -20,10 +20,10 @@
 
         <div v-if="location">
           <div v-for="(tempMin, index) in location.temperature_min" :key="index">
-              <div class="flex justify-between text-white p-2 px-4 mb-2 bg-custom-gray rounded-lg">
+              <div class="flex justify-between text-white py-1 px-4 mb-2 bg-custom-gray rounded-lg">
                 <div class="flex flex-row gap-2 justify-items-center items-center">
                   <img class="justify-self-center" :src="icons[getWeatherIcon(location.weather_code[index])]" alt="Weather Icon" />
-                  <h4 class="text-2xl font-bold">{{ getDayOfWeek(location.time[index]) }}</h4>
+                  <h4 class="text-xl font-bold">{{ getDayOfWeek(location.time[index]) }}</h4>
                 </div>
                 <div class="flex flex-col">
                   <div class="flex gap-6">
