@@ -102,6 +102,13 @@ def get_locations(db: Session = Depends(get_db)):
         locations.append(location_data)
     return locations
 
+@app.post("/dashboard_locations", response_model=DashboardLocationModel)
+def create_location(location: LocationId, db: Session = Depends(get_db)):
+    db_location = DashboardLocation(location_id=location.id)
+    db.add(db_location)
+    db.commit()
+    db.refresh(db_location)
+    return db_location
 def get_weather_data(latitude: float, longitude: float):
     response = httpx.get(f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current=temperature,rain,weathercode")
     return response.json()
