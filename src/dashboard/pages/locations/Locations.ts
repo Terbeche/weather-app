@@ -35,7 +35,6 @@ export default defineComponent({
       selectedLocationToAdd: null as LocationDTO | null,
       selectedLocationToRemove: null as DashboardLocationDTO | null,
       selectedLocationDetails: null as DashboardLocationDTO | null,
-      selectedLocationId: null,
       showSidebar: false,
       searchQuery: '',
       isLoading: true,

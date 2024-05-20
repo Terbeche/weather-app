@@ -1,20 +1,30 @@
+import { defineComponent } from 'vue';
+
 const glob = import.meta.glob('@/assets/icons/*.svg');
 
-export default {
-    async created() {
+export default defineComponent({
+    data() {
+      return {
+        icons: {}
+      };
+    },
+    created() {
+      this.loadIcons();
+    },
+    methods: {
+      async loadIcons() {
         this.icons = Object.fromEntries(
           await Promise.all(
             Object.entries(glob).map(async ([key, value]) => [
-              key.split('/').pop().split('.')[0], // Extract the icon number from the file name
-              (await value()).default // Get the URL of the icon file
+              key.split('/').pop()?.split('.')[0] ?? '',
+              (await value() as { default: string }).default
             ])
           )
         );
-    },
-    methods: {
+      },
       getIconUrl(code: number) {
         const iconName = this.getWeatherIcon(code);
-        return glob`@/assets/icons/${iconName}.svg`.then(module => module.default);
+        return glob`@/assets/icons/${iconName}.svg`.then((module: { default: string }) => module.default);
       },
       getWeatherIcon(code: number) {
         switch (true) {
@@ -38,4 +48,4 @@ export default {
       },
     }
   }
-  
+);
