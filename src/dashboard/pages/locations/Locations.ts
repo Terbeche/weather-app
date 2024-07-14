@@ -3,6 +3,8 @@ import ForecastSidebar from './ForecastSidebar.vue';
 import weatherIconMixin from './weatherIconMixin';
 import { DashboardLocationDTO, LocationDTO } from '@/DTOs/Location';
 
+const config = useRuntimeConfig()
+
 export default defineComponent({
   components: {
     ForecastSidebar,
@@ -54,7 +56,7 @@ export default defineComponent({
   methods: {
     async fetchData() {
       try {
-        const response = await fetch('http://localhost:8000/all_locations');
+        const response = await fetch(`${config.public.baseWeb}/all_locations`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -64,7 +66,7 @@ export default defineComponent({
       }
 
       try {
-          const response = await fetch('http://localhost:8000/dashboard_locations');
+          const response = await fetch(`${config.public.baseWeb}/dashboard_locations`);
           if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
           }
@@ -101,7 +103,7 @@ export default defineComponent({
           return;
         }    
         try {
-            const response = await fetch(`http://localhost:8000/dashboard_locations`, {
+            const response = await fetch(`${config.public.baseWeb}/dashboard_locations`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -113,7 +115,7 @@ export default defineComponent({
             }
             const dashboardLocation = await response.json();
 
-            const locationResponse = await fetch(`http://localhost:8000/dashboard_locations/${dashboardLocation.id}`);
+            const locationResponse = await fetch(`${config.public.baseWeb}/dashboard_locations/${dashboardLocation.id}`);
             const location: DashboardLocationDTO = await locationResponse.json();
 
             this.locations.push(location);
@@ -127,7 +129,7 @@ export default defineComponent({
     },
     async removeLocation(locationToRemove: DashboardLocationDTO) {
       try {
-        const response = await fetch(`http://localhost:8000/dashboard_locations/${locationToRemove.id}`, {
+        const response = await fetch(`${config.public.baseWeb}/dashboard_locations/${locationToRemove.id}`, {
           method: 'DELETE',
         });
         if (!response.ok) {
@@ -152,7 +154,7 @@ export default defineComponent({
     async selectLocationDetails(location: DashboardLocationDTO) {
       this.selectedLocationDetails = location;
       this.showSidebar = true;
-      const response = await fetch(`http://localhost:8000/forecast/${location.location_id}`);
+      const response = await fetch(`${config.public.baseWeb}/forecast/${location.location_id}`);
       const forecast = await response.json();
       this.selectedLocationDetails = { ...location, ...forecast };
     },
