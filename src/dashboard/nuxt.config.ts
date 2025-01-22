@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
     app: {
         head: {
-            title: 'DataCose: Code Challenge',
+            title: 'Weather App',
         },
     },
     ssr: false,
