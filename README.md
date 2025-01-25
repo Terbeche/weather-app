@@ -1,74 +1,129 @@
-# DataCose Code Challenge: Weather App
+# Weather App
 
-## Overview
+> A modern weather application built with Vue, Nuxt, and Tailwind CSS. This app provides real-time weather information using the OpenMeteo API and a predefined list of locations. It features a responsive design, location management, and detailed weather forecasts.
 
-Create a full-stack weather dashboard application utilizing Nuxt 3 for the frontend, Nuxt UI for user interface elements, and FastAPI for the backend. This application will showcase current weather conditions for user-selected locations and provide detailed forecasts.
 
-### Project Setup
+## Built With
 
-You will be provided with a starter template that includes a configured Nuxt 3 frontend and a FastAPI backend. You are required to use this template. Feel free to install additional packages as needed to complete the challenge.
+![Vue.js](https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D)  
+![Nuxt.js](https://img.shields.io/badge/Nuxt.js-00C58E?style=for-the-badge&logo=nuxtdotjs&logoColor=white)  
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)  
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)  
+![Postgres](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)  
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-000000?style=for-the-badge&logo=sqlalchemy&logoColor=white)  
+![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)  
+![VS Code](https://img.shields.io/badge/VS_Code-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white)   
 
-### Design
 
-You must adhere to the design outlined in the screenshots within this document. It is essential to follow not just the layout but also the colors and other details as specified in the screenshots within this document. You can find the used icons in the `icons` folder.
+## Live Demo
 
-## Challenge Requirements
+[Live Demo Link](https://weather-app-dashboard-seven.vercel.app/)
+
+
+### Setup
+If you wish to run the project locally, please do the following:
+
+1.- Clone the repository to your local machine.
+
+#### Frontend:
+1.- Install Node.js and npm if you haven't already.
+   To install Node.js, follow the instructions on [Node.js](https://nodejs.org/en/).
+   
+   To install npm with the necessary dependencies, run the following command in your terminal:
+   ``` bash
+   npm install 
+   ```
+2.- Go to the dashboard directory:
+
+``` bash
+cd src/dashboard
+```
+
+3.- Create a .env file in the src/dashboard directory and copy the contents of .env.example into .env and replace the placeholders with their actual values.:
+
+4.- Once you have the setup and the project locally, you can run the project using the following command in your terminal:
+``` bash
+npm run build
+```
+5.- and if you want to watch the changes live, run the following command (it will run the website on localhost:3000):
+``` bash
+npm run dev
+```
+#### Backend:
+
+1.- Go to the api directory:
+
+``` bash
+cd src/api
+```
+
+2.- Create a .env file in the src/api directory and copy the contents of .env.example into .env and replace the placeholders with their actual values.:
+
+
+3.- Install the requirements:
+
+``` bash
+pip install -r requirements.txt
+```
+
+4.- Start the server:
+
+``` bash
+uvicorn main:app --reload
+```
+
+## Features
 
 ### Main Page
 
--   **Weather Table:** The homepage should feature a table displaying weather information for each chosen location, including:
-    -   An icon representing the weather condition, based on the WMO code.
-    -   The location's name.
-    -   The current temperature in degrees Celsius.
-    -   The current rainfall in millimeters.
-    -   A "Remove" button for each location. Clicking this button should trigger a confirmation popup before the location is deleted from the table.
+- **Weather Table:** Displays weather information for each chosen location, including:
+  - An icon representing the weather condition (based on the WMO code).
+  - The location's name.
+  - The current temperature in degrees Celsius.
+  - The current rainfall in millimeters.
+  - A "Remove" button for each location. Clicking this button triggers a confirmation popup before the location is deleted from the table.
 
-![table](/design/table.png)
+![Weather Table](/design/table.png)
 
 ### Detailed Forecast
 
--   **Forecast Sidebar:** Clicking on a row within the table should open a sidebar. This sidebar will provide a detailed temperature and rainfall forecast for the next 7 days for the selected location.
+- **Forecast Sidebar:** Clicking on a row within the table opens a sidebar. This sidebar provides a detailed temperature and rainfall forecast for the next 7 days for the selected location.
 
-![table](/design/sidebar.png)
+![Forecast Sidebar](/design/sidebar.png)
 
 ### Location Management
 
--   **Add Location:** Incorporate a button above the table to add new locations. This will open a popup where users can search for and select a location to add to the table. Make sure the user can't submit the form if no location was selected.
+- **Add Location:** A button above the table allows users to add new locations. This opens a popup where users can search for and select a location to add to the table. The form cannot be submitted if no location is selected.
 
-![table](/design/modal.png)
-
-### Database Integration
-
-- Implement SQLAlchemy with a local Postgres database.
-- Design a `Location` model with attributes including id, name, latitude, and longitude.
-
-### API Endpoints
-
-- **Manage Locations:**
-  - `GET /locations`: Retrieve a list of all locations saved in the database, including their current weather conditions. This requires integrating with the [OpenMeteo API](https://open-meteo.com/) to fetch weather data based on latitude and longitude.
-  - `POST /locations`: Allow adding a new location by providing name, latitude, and longitude.
-  - `DELETE /locations/{id}`: Enable location deletion by ID.
-
-- **Weather Forecast:**
-  - `GET /forecast/{location_id}`: Provide a detailed 7-day weather forecast for a specified location. This endpoint will call the OpenMeteo API to fetch forecast data based on the location's latitude and longitude stored in the database.
+![Add Location Modal](/design/modal.png)
 
 
-### API Integration
+👤 **Author**
 
--   To fetch weather information, you are to use the [OpenMeteo API](https://open-meteo.com/). Given that this API requires latitude and longitude for location data, utilize [this predefined list of locations](https://gist.github.com/ofou/df09a6834a8421b4f376c875194915c9) as your hardcoded source.
+- GitHub: [@Terbeche](https://github.com/Terbeche)
+- Twitter: [@twitterhandle](https://x.com/Terbech_Mostefa)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/mustapha-terbeche/)
 
-## Evaluation Criteria
+## 🤝 Contributing
 
-Your submission will be assessed based on:
+Contributions, issues, and feature requests are welcome!
 
--   **Functionality:** Adherence to the requirements and overall functionality of the application.
--   **Code Quality:** Organization, readability, and documentation of code.
--   **UI/UX Design:** The usability and aesthetic appeal of the application interface.
--   **Innovation and Creativity:** Any additional features or enhancements that improve the app's functionality or user experience.
+Feel free to check the [issues page](https://github.com/Terbeche/weather-app/issues).
 
-## Submission Guidelines
+## Show your support
 
--   Your completed project should be submitted as a ZIP file.
--   Include a Loom video walking through the UI.
+Give a ⭐️ if you like this project!
 
-We look forward to seeing your innovative solution. Best of luck!
+## Acknowledgments
+
+
+- To fetch weather information, you are to use the [OpenMeteo API](https://open-meteo.com/).
+- For location data, [Predefined list of locations](https://gist.github.com/ofou/df09a6834a8421b4f376c875194915c9).
+
+
+
+
+
+
+
+
