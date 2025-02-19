@@ -25,7 +25,7 @@ app.include_router(locations.router)
 app.include_router(dashboard_locations.router)
 
 Base.metadata.create_all(bind=engine)
-add_locations_to_db()
+# add_locations_to_db()
 
 if __name__ == "__main__":
     import uvicorn
